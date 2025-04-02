@@ -1,0 +1,5 @@
+{
+  "excludeFileNames": ["*.md", "*.txt", ".zip"],
+  "includeFileNames": [".vue"],
+  "findFiles": ["倪"]
+}
