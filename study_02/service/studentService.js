@@ -1,15 +1,34 @@
 import Student from '../modules/Student.js';
+import Validator from 'validatorjs';
 
 /** 添加学生信息 */
 export async function addStudent(studentsObjList) {
   console.log(studentsObjList);
-  const student = await Student.bulkCreate(studentsObjList);
-  return student;
+  const validation = new Validator(studentsObjList,rules);
+  if(!validation.passes()) {
+    return validation
+  }
+  return await Student.bulkCreate(studentsObjList);
 }
 /** 获取学生信息 */
 export async function getStudent(studentObj) {
-  const student = await Student.findOne({
+  return await Student.findOne({
     where: studentObj,
   });
-  return student;
 }
+
+let data = {
+  name: 'John',
+  email: 'johndoe@gmail.com',
+  age: 28
+};
+
+let orules = {
+  name: 'required',
+  email: 'required|email',
+  age: 'min:18'
+};
+
+const validation = new Validator(data, orules);
+
+console.log(validation.passes()) // true
